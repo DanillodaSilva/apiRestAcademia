@@ -2,6 +2,8 @@ package br.com.daSIlva.academiaProjeto.controller;
 
 import br.com.daSIlva.academiaProjeto.dto.request.AlunoRequestDto;
 import br.com.daSIlva.academiaProjeto.dto.response.AlunoResponseDto;
+import br.com.daSIlva.academiaProjeto.exception.BadRequestException;
+import br.com.daSIlva.academiaProjeto.exception.NotFoundException;
 import br.com.daSIlva.academiaProjeto.service.AlunoService;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -23,7 +25,7 @@ public class AlunoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void criarAluno(@Valid @RequestBody AlunoRequestDto dto) throws Exception {
+    public void criarAluno(@Valid @RequestBody AlunoRequestDto dto) throws BadRequestException {
         alunoService.criarAluno(dto);
     }
 
@@ -35,12 +37,12 @@ public class AlunoController {
 
     @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AlunoResponseDto findBYIdAluno(@Valid @PathVariable UUID id) throws Exception {
+    public AlunoResponseDto findBYIdAluno(@Valid @PathVariable UUID id) throws NotFoundException {
         return alunoService.findById(id);
     }
     @DeleteMapping("/id/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBYIdAluno(@Valid @PathVariable UUID id) throws Exception {
+    public void deleteBYIdAluno(@Valid @PathVariable UUID id) throws NotFoundException {
         alunoService.deleteById(id);
     }
 }

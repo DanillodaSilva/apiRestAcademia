@@ -4,6 +4,8 @@ import br.com.daSIlva.academiaProjeto.database.model.AlunoEntity;
 import br.com.daSIlva.academiaProjeto.database.repository.AlunoRepository;
 import br.com.daSIlva.academiaProjeto.dto.request.AlunoRequestDto;
 import br.com.daSIlva.academiaProjeto.dto.response.AlunoResponseDto;
+import br.com.daSIlva.academiaProjeto.exception.BadRequestException;
+import br.com.daSIlva.academiaProjeto.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +20,10 @@ public class AlunoService {
     private final AlunoRepository alunoRepository;
 
 //    CADASTRAR
-    public void criarAluno(AlunoRequestDto dto) throws Exception {
+    public void criarAluno(AlunoRequestDto dto) throws BadRequestException {
         AlunoEntity aluno = alunoRepository.findByEmail(dto.getEmail()).orElse(null);
         if (aluno != null){
-            throw new Exception("Email ja cadastrado");
+            throw new BadRequestException("Email ja cadastrado");
         }
 
         aluno = AlunoEntity.builder()
@@ -41,10 +43,10 @@ public class AlunoService {
         )).collect(Collectors.toList());
     }
 //    BUSCARPORID
-    public AlunoResponseDto findById(UUID id) throws Exception {
+    public AlunoResponseDto findById(UUID id) throws NotFoundException {
         AlunoEntity aluno = alunoRepository
                 .findById(id)
-                .orElseThrow(()->new Exception("Aluno não cadastrado"));
+                .orElseThrow(()->new NotFoundException("Aluno não cadastrado"));
 
         return new AlunoResponseDto(
                 aluno.getNome(),
@@ -53,10 +55,10 @@ public class AlunoService {
         );
     }
 //    REMOVER
-    public void deleteById(UUID id)throws Exception{
+    public void deleteById(UUID id)throws NotFoundException{
         alunoRepository
                 .findById(id)
-                .orElseThrow(()->new Exception("Aluno não cadastrado"));
+                .orElseThrow(()->new NotFoundException("Aluno não cadastrado"));
 
         alunoRepository.deleteById(id);
     }
