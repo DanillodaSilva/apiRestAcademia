@@ -5,10 +5,12 @@ import br.com.daSIlva.academiaProjeto.database.repository.PlanoRepository;
 import br.com.daSIlva.academiaProjeto.dto.request.PlanoRequestDto;
 import br.com.daSIlva.academiaProjeto.dto.response.PlanoResponseDto;
 import br.com.daSIlva.academiaProjeto.exception.BadRequestException;
+import br.com.daSIlva.academiaProjeto.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +39,18 @@ public class PlanoService {
                         p.getPreco(),
                         p.getId()
                 )).collect(Collectors.toList());
+    }
+
+    public PlanoResponseDto findById(UUID id){
+        PlanoEntity planoEntity = plano
+                .findById(id)
+                .orElseThrow(()-> new NotFoundException("Plano não encontrado no sistema"));
+
+        return new PlanoResponseDto(
+                planoEntity.getNome(),
+                planoEntity.getPreco(),
+                planoEntity.getId()
+        );
     }
 
 }

@@ -5,11 +5,13 @@ import br.com.daSIlva.academiaProjeto.database.repository.PlanoRepository;
 import br.com.daSIlva.academiaProjeto.dto.request.PlanoRequestDto;
 import br.com.daSIlva.academiaProjeto.dto.response.PlanoResponseDto;
 import br.com.daSIlva.academiaProjeto.service.PlanoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -21,7 +23,7 @@ public class PlanoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void criarPlano(@RequestBody PlanoRequestDto dto) {
+    public void criarPlano(@Valid @RequestBody PlanoRequestDto dto) {
         planoService.criarPlano(dto);
     }
 
@@ -29,5 +31,10 @@ public class PlanoController {
     @ResponseStatus(HttpStatus.OK)
     public List<PlanoResponseDto> findAllPlanos(){
         return planoService.findAllPlanos();
+    }
+    @GetMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PlanoResponseDto findByIdPlanos(@Valid @PathVariable UUID id){
+        return planoService.findById(id);
     }
 }
