@@ -53,4 +53,11 @@ public class AlunoService {
         );
     }
 //    REMOVER
+    public void deleteById(UUID id)throws Exception{
+        alunoRepository
+                .findById(id)
+                .orElseThrow(()->new Exception("Aluno não cadastrado"));
+
+        alunoRepository.deleteById(id);
+    }
 }

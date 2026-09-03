@@ -38,4 +38,9 @@ public class AlunoController {
     public AlunoResponseDto findBYIdAluno(@Valid @PathVariable UUID id) throws Exception {
         return alunoService.findById(id);
     }
+    @DeleteMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBYIdAluno(@Valid @PathVariable UUID id) throws Exception {
+        alunoService.deleteById(id);
+    }
 }
