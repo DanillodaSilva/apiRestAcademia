@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,5 +41,16 @@ public class AlunoService {
         )).collect(Collectors.toList());
     }
 //    BUSCARPORID
+    public AlunoResponseDto findById(UUID id) throws Exception {
+        AlunoEntity aluno = alunoRepository
+                .findById(id)
+                .orElseThrow(()->new Exception("Aluno não cadastrado"));
+
+        return new AlunoResponseDto(
+                aluno.getNome(),
+                aluno.getEmail(),
+                aluno.getId()
+        );
+    }
 //    REMOVER
 }
