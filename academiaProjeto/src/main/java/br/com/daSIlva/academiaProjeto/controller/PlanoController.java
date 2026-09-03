@@ -32,9 +32,18 @@ public class PlanoController {
     public List<PlanoResponseDto> findAllPlanos(){
         return planoService.findAllPlanos();
     }
+
     @GetMapping("/id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PlanoResponseDto findByIdPlanos(@Valid @PathVariable UUID id){
         return planoService.findById(id);
     }
+
+    @DeleteMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteByIdPlanos(@Valid @PathVariable UUID id){
+        planoService.deleteById(id);
+    }
+
+
 }

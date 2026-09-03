@@ -53,4 +53,9 @@ public class PlanoService {
         );
     }
 
+    public void deleteById(UUID id){
+        plano.findById(id).orElseThrow(()-> new NotFoundException("Plano não encontrado"));
+        plano.deleteById(id);
+    }
+
 }
