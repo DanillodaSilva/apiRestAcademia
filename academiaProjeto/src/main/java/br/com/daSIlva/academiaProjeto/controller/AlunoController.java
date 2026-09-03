@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Set;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/aluno")
@@ -20,5 +23,11 @@ public class AlunoController {
     @ResponseStatus(HttpStatus.CREATED)
     public void criarAluno(@RequestBody AlunoRequestDto dto) throws Exception {
         alunoService.criarAluno(dto);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<AlunoResponseDto> findAllAluno(){
+        return alunoService.findAll();
     }
 }

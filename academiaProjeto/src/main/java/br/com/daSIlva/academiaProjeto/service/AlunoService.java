@@ -3,8 +3,12 @@ package br.com.daSIlva.academiaProjeto.service;
 import br.com.daSIlva.academiaProjeto.database.model.AlunoEntity;
 import br.com.daSIlva.academiaProjeto.database.repository.AlunoRepository;
 import br.com.daSIlva.academiaProjeto.dto.request.AlunoRequestDto;
+import br.com.daSIlva.academiaProjeto.dto.response.AlunoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +30,15 @@ public class AlunoService {
         alunoRepository.save(aluno);
     }
 //    LISTAR
+    public List<AlunoResponseDto> findAll(){
+        List<AlunoEntity> alunoEntities = alunoRepository.findAll();
+
+        return alunoEntities.stream().map(a -> new AlunoResponseDto(
+                a.getNome(),
+                a.getEmail(),
+                a.getId()
+        )).collect(Collectors.toList());
+    }
 //    BUSCARPORID
 //    REMOVER
 }
