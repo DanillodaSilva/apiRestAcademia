@@ -20,5 +20,5 @@ public class PlanoEntity {
     @Column(nullable = false,unique = true)
     private String nome;
     @Column(nullable = false)
-    private BigDecimal valor;
+    private BigDecimal preco;
 }

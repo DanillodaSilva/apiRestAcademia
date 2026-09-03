@@ -15,5 +15,5 @@ public class PlanoRequestDto {
     @NotBlank
     String nome;
     @NotNull
-    BigDecimal valor;
+    BigDecimal preco;
 }
