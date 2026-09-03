@@ -3,9 +3,13 @@ package br.com.daSIlva.academiaProjeto.service;
 import br.com.daSIlva.academiaProjeto.database.model.PlanoEntity;
 import br.com.daSIlva.academiaProjeto.database.repository.PlanoRepository;
 import br.com.daSIlva.academiaProjeto.dto.request.PlanoRequestDto;
+import br.com.daSIlva.academiaProjeto.dto.response.PlanoResponseDto;
 import br.com.daSIlva.academiaProjeto.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +26,17 @@ public class PlanoService {
                 .preco(dto.getPreco())
                 .build();
         plano.save(planoEntity);
+    }
+
+    public List<PlanoResponseDto> findAllPlanos(){
+        List<PlanoEntity> planoEntities = plano.findAll();
+
+        return planoEntities.stream()
+                .map(p-> new  PlanoResponseDto(
+                        p.getNome(),
+                        p.getPreco(),
+                        p.getId()
+                )).collect(Collectors.toList());
     }
 
 }

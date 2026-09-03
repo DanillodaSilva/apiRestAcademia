@@ -3,11 +3,14 @@ package br.com.daSIlva.academiaProjeto.controller;
 import br.com.daSIlva.academiaProjeto.database.model.PlanoEntity;
 import br.com.daSIlva.academiaProjeto.database.repository.PlanoRepository;
 import br.com.daSIlva.academiaProjeto.dto.request.PlanoRequestDto;
+import br.com.daSIlva.academiaProjeto.dto.response.PlanoResponseDto;
 import br.com.daSIlva.academiaProjeto.service.PlanoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
 
 @RestController
 @Validated
@@ -20,5 +23,11 @@ public class PlanoController {
     @ResponseStatus(HttpStatus.CREATED)
     public void criarPlano(@RequestBody PlanoRequestDto dto) {
         planoService.criarPlano(dto);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<PlanoResponseDto> findAllPlanos(){
+        return planoService.findAllPlanos();
     }
 }
