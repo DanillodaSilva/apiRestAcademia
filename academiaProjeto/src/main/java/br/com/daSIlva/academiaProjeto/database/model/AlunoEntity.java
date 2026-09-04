@@ -3,6 +3,8 @@ package br.com.daSIlva.academiaProjeto.database.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,4 +23,6 @@ public class AlunoEntity {
     @Column(nullable = false,unique = true)
     private String email;
 
+    @OneToMany(mappedBy = "aluno")
+    private List<MatriculaEntity> matriculaEntities = new ArrayList<>();
 }
