@@ -7,9 +7,15 @@ import br.com.daSIlva.academiaProjeto.database.repository.AlunoRepository;
 import br.com.daSIlva.academiaProjeto.database.repository.MatriculaRepository;
 import br.com.daSIlva.academiaProjeto.database.repository.PlanoRepository;
 import br.com.daSIlva.academiaProjeto.dto.request.MatriculaRequestDto;
+import br.com.daSIlva.academiaProjeto.dto.response.AlunoResponseDto;
+import br.com.daSIlva.academiaProjeto.dto.response.MatriculaResponseDto;
+import br.com.daSIlva.academiaProjeto.dto.response.PlanoResponseDto;
 import br.com.daSIlva.academiaProjeto.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +41,30 @@ public class MatriculaService {
                 .build();
 
         matriculaRepository.save(matricula);
+    }
+
+    public List<MatriculaResponseDto> findAllMatricula(){
+        List<MatriculaEntity> matriculaEntities = matriculaRepository.findAll();
+
+        return matriculaEntities.stream().map(m -> {AlunoResponseDto alunoResponseDto = new AlunoResponseDto(
+                m.getAluno().getNome(),
+                m.getAluno().getEmail(),
+                m.getAluno().getId()
+                );
+                    PlanoResponseDto planoResponseDto = new PlanoResponseDto(
+                            m.getPlano().getNome(),
+                            m.getPlano().getPreco(),
+                            m.getPlano().getId()
+                    );
+                    return new MatriculaResponseDto(
+                            m.getId(),
+                            m.getDiaDaMatricula(),
+                            m.getStatusDaMatricula(),
+                            alunoResponseDto,
+                            planoResponseDto
+                    );
+                })
+                .toList();
     }
 
 }

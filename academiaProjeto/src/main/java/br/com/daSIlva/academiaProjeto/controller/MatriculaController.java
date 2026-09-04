@@ -1,12 +1,15 @@
 package br.com.daSIlva.academiaProjeto.controller;
 
 import br.com.daSIlva.academiaProjeto.dto.request.MatriculaRequestDto;
+import br.com.daSIlva.academiaProjeto.dto.response.MatriculaResponseDto;
 import br.com.daSIlva.academiaProjeto.service.MatriculaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,6 +22,12 @@ public class MatriculaController {
     @ResponseStatus(HttpStatus.CREATED)
     public void criarMatricula(@Valid @RequestBody MatriculaRequestDto dto){
         matriculaService.criarMatricula(dto);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<MatriculaResponseDto> findAllMatricula(){
+        return matriculaService.findAllMatricula();
     }
 
 }
