@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,6 +66,29 @@ public class MatriculaService {
                     );
                 })
                 .toList();
+    }
+
+    public MatriculaResponseDto findById(UUID id){
+        MatriculaEntity m = matriculaRepository
+                .findById(id)
+                .orElseThrow(()->new NotFoundException("Matricula não encontrada"));
+        PlanoResponseDto planoResponseDto = new PlanoResponseDto(
+                m.getPlano().getNome(),
+                m.getPlano().getPreco(),
+                m.getPlano().getId()
+        );
+        AlunoResponseDto alunoResponseDto = new AlunoResponseDto(
+                m.getAluno().getNome(),
+                m.getAluno().getEmail(),
+                m.getAluno().getId()
+        );
+        return new MatriculaResponseDto(
+                m.getId(),
+                m.getDiaDaMatricula(),
+                m.getStatusDaMatricula(),
+                alunoResponseDto,
+                planoResponseDto
+        );
     }
 
 }

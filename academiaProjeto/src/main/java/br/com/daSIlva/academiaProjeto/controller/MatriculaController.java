@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,4 +31,9 @@ public class MatriculaController {
         return matriculaService.findAllMatricula();
     }
 
+    @GetMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public MatriculaResponseDto findByIdMatricula(@Valid @PathVariable UUID id){
+        return matriculaService.findById(id);
+    }
 }
