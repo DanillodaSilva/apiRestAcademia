@@ -3,6 +3,7 @@ package br.com.daSIlva.academiaProjeto.service;
 import br.com.daSIlva.academiaProjeto.database.model.AlunoEntity;
 import br.com.daSIlva.academiaProjeto.database.model.MatriculaEntity;
 import br.com.daSIlva.academiaProjeto.database.model.PlanoEntity;
+import br.com.daSIlva.academiaProjeto.database.model.StatusDaMaTricula;
 import br.com.daSIlva.academiaProjeto.database.repository.AlunoRepository;
 import br.com.daSIlva.academiaProjeto.database.repository.MatriculaRepository;
 import br.com.daSIlva.academiaProjeto.database.repository.PlanoRepository;
@@ -10,7 +11,9 @@ import br.com.daSIlva.academiaProjeto.dto.request.MatriculaRequestDto;
 import br.com.daSIlva.academiaProjeto.dto.response.AlunoResponseDto;
 import br.com.daSIlva.academiaProjeto.dto.response.MatriculaResponseDto;
 import br.com.daSIlva.academiaProjeto.dto.response.PlanoResponseDto;
+import br.com.daSIlva.academiaProjeto.exception.BadRequestException;
 import br.com.daSIlva.academiaProjeto.exception.NotFoundException;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +29,13 @@ public class MatriculaService {
     private final PlanoRepository planoRepository;
 
     public void criarMatricula(MatriculaRequestDto dto) {
+
         AlunoEntity aluno = alunoRepository
                 .findById(dto.getAlunoId())
                 .orElseThrow(() -> new NotFoundException("Aluno não encontrado"));
-
+        if (aluno.getMatriculaEntities().stream().anyMatch(m -> m.getStatusDaMatricula() == StatusDaMaTricula.ATIVA)){
+            throw new BadRequestException("Aluno já tem uma matricula ativa cadastrada");
+        }
         PlanoEntity plano = planoRepository
                 .findById(dto.getPlanoId())
                 .orElseThrow(() -> new NotFoundException("Plano não encontrado"));

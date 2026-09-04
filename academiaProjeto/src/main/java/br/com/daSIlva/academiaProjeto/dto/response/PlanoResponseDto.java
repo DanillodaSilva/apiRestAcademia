@@ -4,6 +4,6 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public record PlanoResponseDto(String nome,
-                               BigDecimal preco,
+                               BigDecimal precogit,
                                UUID id) {
 }
