@@ -9,5 +9,4 @@ import java.util.UUID;
 
 public interface AlunoRepository extends JpaRepository<AlunoEntity, UUID> {
     Optional<AlunoEntity> findByEmail(String email);
-    Optional<AlunoEntity> findByStatusAndId(StatusDaMaTricula status,UUID id);
 }
