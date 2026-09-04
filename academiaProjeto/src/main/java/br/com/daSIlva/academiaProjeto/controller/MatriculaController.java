@@ -36,4 +36,10 @@ public class MatriculaController {
     public MatriculaResponseDto findByIdMatricula(@Valid @PathVariable UUID id){
         return matriculaService.findById(id);
     }
+
+    @DeleteMapping("/id/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@Valid @PathVariable UUID id){
+        matriculaService.deleteById(id);
+    }
 }

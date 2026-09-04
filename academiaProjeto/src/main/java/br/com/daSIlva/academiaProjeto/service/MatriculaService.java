@@ -44,14 +44,15 @@ public class MatriculaService {
         matriculaRepository.save(matricula);
     }
 
-    public List<MatriculaResponseDto> findAllMatricula(){
+    public List<MatriculaResponseDto> findAllMatricula() {
         List<MatriculaEntity> matriculaEntities = matriculaRepository.findAll();
 
-        return matriculaEntities.stream().map(m -> {AlunoResponseDto alunoResponseDto = new AlunoResponseDto(
-                m.getAluno().getNome(),
-                m.getAluno().getEmail(),
-                m.getAluno().getId()
-                );
+        return matriculaEntities.stream().map(m -> {
+                    AlunoResponseDto alunoResponseDto = new AlunoResponseDto(
+                            m.getAluno().getNome(),
+                            m.getAluno().getEmail(),
+                            m.getAluno().getId()
+                    );
                     PlanoResponseDto planoResponseDto = new PlanoResponseDto(
                             m.getPlano().getNome(),
                             m.getPlano().getPreco(),
@@ -68,10 +69,10 @@ public class MatriculaService {
                 .toList();
     }
 
-    public MatriculaResponseDto findById(UUID id){
+    public MatriculaResponseDto findById(UUID id) {
         MatriculaEntity m = matriculaRepository
                 .findById(id)
-                .orElseThrow(()->new NotFoundException("Matricula não encontrada"));
+                .orElseThrow(() -> new NotFoundException("Matricula não encontrada"));
         PlanoResponseDto planoResponseDto = new PlanoResponseDto(
                 m.getPlano().getNome(),
                 m.getPlano().getPreco(),
@@ -89,6 +90,14 @@ public class MatriculaService {
                 alunoResponseDto,
                 planoResponseDto
         );
+    }
+
+    public void deleteById(UUID id) {
+        matriculaRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Matricula não encontrada"));
+
+        matriculaRepository.deleteById(id);
     }
 
 }
