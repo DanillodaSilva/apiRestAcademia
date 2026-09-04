@@ -6,9 +6,11 @@ import br.com.daSIlva.academiaProjeto.database.model.StatusDaMaTricula;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,12 +19,12 @@ import java.time.LocalDate;
 @Builder
 public class MatriculaRequestDto {
     @NotNull
-    @Past
-    LocalDate diaDaMatricula;
+    @PastOrPresent
+    LocalDate diaDaMatricula ;
     @NotNull
-    StatusDaMaTricula statusDaMaTricula;
+    StatusDaMaTricula status;
     @NotNull
-    AlunoEntity aluno;
+    UUID alunoId;
     @NotNull
-    PlanoEntity plano;
+    UUID planoId;
 }

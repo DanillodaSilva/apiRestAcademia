@@ -20,7 +20,7 @@ public class MatriculaEntity {
     @Column(nullable = false)
     private LocalDate diaDaMatricula;
     @Column(nullable = false)
-    private StatusDaMaTricula statusDaMaTricula;
+    private StatusDaMaTricula statusDaMatricula;
 
     @ManyToOne
     @JoinColumn(name = "aluno_id")
